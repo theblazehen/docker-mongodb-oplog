@@ -13,15 +13,16 @@ echo "[x] Waiting for MongoDB to start"
 while ! mongo --eval "db.version()" > /dev/null 2>&1; do sleep 0.1; done
 
 echo "[x] Initializing replicaset"
-mongo local --eval "rs.initiate()"
-sleep 2
-mongo local --eval "rs.conf()"
-sleep 2
-mongo admin --eval "db.shutdownServer({force: 1});"
+mongo local --eval 'rs.initiate({
+   _id : "rs0",
+   members: [ { _id : 0, host : "mongo:27017" } ]
+})'
+sleep 3
+kill -2 %1
+rm -f /data/db/mongod.lock
 
 echo "[x] Waiting for MongoDB to stop"
 while mongo --eval "db.version()" > /dev/null 2>&1; do sleep 0.1; done
-kill -2 %1
 
 # make sure this script is only run once
 touch /data/db/.init_done
