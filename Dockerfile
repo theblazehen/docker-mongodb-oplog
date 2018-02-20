@@ -1,7 +1,8 @@
-FROM mvertes/alpine-mongo:3.2.3
-MAINTAINER Zadkiel Aslafy-Aharonian
+FROM mvertes/alpine-mongo:3.6.2-0
+MAINTAINER Zadkiel Aslafy-Aharonian <github@aslafy-z>
 
-COPY repl_init.sh run.sh /root/
-RUN chmod +x /root/*.sh
+COPY endpoint.sh init_repl.sh /
+RUN ["chmod", "+x", "/endpoint.sh", "/init_repl.sh"]
 
-ENTRYPOINT /root/run.sh
+VOLUME /data/db
+ENTRYPOINT ["/endpoint.sh"]
