@@ -1,10 +1,15 @@
-Using https://github.com/mvertes/docker-alpine-mongo for a tiny mongo image.
+# docker-mongodb-oplog
 
-This adds a replica set `rs0`.
+Simple mongodb image with single-node replicaset enabled.
+
+### This image is unsecured, binds to all open interfaces and does not includes any authentication process. It it strictly meant for developpement, DO NOT use for production.  
+
+It uses [mvertes/docker-alpine-mongo](https://github.com/mvertes/docker-alpine-mongo) as base image.
+
+ReplicaSet name: `rs0`.
 
 ```
-MONGO_URL=mongodb://<link>/my_database?replicaSet=rs0
-MONGO_URL_OPLOG=mongodb://<link>/local?replicaSet=rs0
+MONGO_URL=mongodb://<hostname>/my_database?replicaSet=rs0
+MONGO_URL_OPLOG=mongodb://<hostname>/local?replicaSet=rs0
 ```
 
-There is no security.  Use Docker links instead.
